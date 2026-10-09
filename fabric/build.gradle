@@ -44,17 +44,22 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 }
 
+def modVersion = project.version
+def minecraftDep = project.minecraft_dep
+def javaDep = project.java_dep
+def loaderDep = project.loader_dep
+
 processResources {
-	inputs.property "version", project.version
-	inputs.property "minecraft_dep", project.minecraft_dep
-	inputs.property "java_dep", project.java_dep
-	inputs.property "loader_dep", project.loader_dep
+	inputs.property "version", modVersion
+	inputs.property "minecraft_dep", minecraftDep
+	inputs.property "java_dep", javaDep
+	inputs.property "loader_dep", loaderDep
 
 	filesMatching("fabric.mod.json") {
-		expand "version": project.version,
-			"minecraft_dep": project.minecraft_dep,
-			"java_dep": project.java_dep,
-			"loader_dep": project.loader_dep
+		expand "version": modVersion,
+			"minecraft_dep": minecraftDep,
+			"java_dep": javaDep,
+			"loader_dep": loaderDep
 	}
 }
 

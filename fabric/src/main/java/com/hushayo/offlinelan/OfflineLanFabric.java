@@ -31,24 +31,24 @@ public class OfflineLanFabric implements ModInitializer {
                     .requires(CmdPerm.op())
                     .then(Commands.literal("on").executes(ctx -> {
                         setOnlineMode(ctx.getSource().getServer(), true);
-                        ctx.getSource().sendSuccess(() -> Component.literal("Online Mode is now ON. Only premium accounts can join LAN."), false);
+                        CmdPerm.say(ctx.getSource(), "Online Mode is now ON. Only premium accounts can join LAN.");
                         return 1;
                     }))
                     .then(Commands.literal("off").executes(ctx -> {
                         setOnlineMode(ctx.getSource().getServer(), false);
-                        ctx.getSource().sendSuccess(() -> Component.literal("Online Mode is now OFF. Offline/cracked accounts can join LAN."), false);
+                        CmdPerm.say(ctx.getSource(), "Online Mode is now OFF. Offline/cracked accounts can join LAN.");
                         return 1;
                     }))
                     .then(Commands.literal("status").executes(ctx -> {
                         MinecraftServer server = ctx.getSource().getServer();
                         boolean effective = server != null ? server.usesAuthentication() : onlineMode;
-                        ctx.getSource().sendSuccess(() -> Component.literal("Online Mode is currently " + (effective ? "ON" : "OFF")), false);
+                        CmdPerm.say(ctx.getSource(), "Online Mode is currently " + (effective ? "ON" : "OFF"));
                         return 1;
                     }))
                     .executes(ctx -> {
                         MinecraftServer server = ctx.getSource().getServer();
                         boolean effective = server != null ? server.usesAuthentication() : onlineMode;
-                        ctx.getSource().sendSuccess(() -> Component.literal("Online Mode is currently " + (effective ? "ON" : "OFF") + ". Use /online-mode on|off"), false);
+                        CmdPerm.say(ctx.getSource(), "Online Mode is currently " + (effective ? "ON" : "OFF") + ". Use /online-mode on|off");
                         return 1;
                     });
             dispatcher.register(cmd);

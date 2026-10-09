@@ -2,9 +2,10 @@ package com.hushayo.offlinelan;
 
 import java.util.function.Predicate;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.network.chat.Component;
 
 /**
- * OP check for /online-mode, legacy variant (Minecraft 1.19 - 1.21.10).
+ * OP check + message helper for /online-mode, legacy variant (Minecraft 1.20 - 1.21.10).
  *
  * <p>Uses the numeric permission level. This exact API
  * ({@code CommandSourceStack.hasPermission(int)}) was removed in 1.21.11 by the
@@ -18,5 +19,9 @@ public final class CmdPerm {
 
     public static Predicate<CommandSourceStack> op() {
         return src -> src.hasPermission(3);
+    }
+
+    public static void say(CommandSourceStack src, String text) {
+        src.sendSuccess(() -> Component.literal(text), false);
     }
 }

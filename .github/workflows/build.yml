@@ -85,14 +85,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { mc: '1.19.2', forge: '43.5.0', mcrange: '[1.19.2,1.20)', frange: '[43,)', lrange: '[43,)', pack: '9' }
-          - { mc: '1.19.3', forge: '44.1.0', mcrange: '[1.19.3,1.20)', frange: '[44,)', lrange: '[44,)', pack: '12' }
-          - { mc: '1.19.4', forge: '45.4.0', mcrange: '[1.19.4,1.20)', frange: '[45,)', lrange: '[45,)', pack: '13' }
+          - { mc: '1.19.2', forge: '43.5.0', mcrange: '[1.19.2,1.20)', frange: '[43,)', lrange: '[43,)', pack: '9', cmdperm: 'legacy19' }
+          - { mc: '1.19.3', forge: '44.1.0', mcrange: '[1.19.3,1.20)', frange: '[44,)', lrange: '[44,)', pack: '12', cmdperm: 'legacy19' }
+          - { mc: '1.19.4', forge: '45.4.0', mcrange: '[1.19.4,1.20)', frange: '[45,)', lrange: '[45,)', pack: '13', cmdperm: 'legacy19' }
           - { mc: '1.20', forge: '46.0.14', mcrange: '[1.20,1.21)', frange: '[46,)', lrange: '[46,)', pack: '15' }
           - { mc: '1.20.1', forge: '47.4.10', mcrange: '[1.20.1,1.21)', frange: '[47,)', lrange: '[47,)', pack: '15' }
           - { mc: '1.20.2', forge: '48.1.0', mcrange: '[1.20.2,1.21)', frange: '[48,)', lrange: '[48,)', pack: '18' }
           - { mc: '1.20.4', forge: '49.2.0', mcrange: '[1.20.4,1.21)', frange: '[49,)', lrange: '[49,)', pack: '22' }
-          - { mc: '1.20.6', forge: '50.2.0', mcrange: '[1.20.6,1.21)', frange: '[50,)', lrange: '[50,)', pack: '32' }
+          - { mc: '1.20.6', forge: '50.2.0', mcrange: '[1.20.6,1.21)', frange: '[50,)', lrange: '[50,)', pack: '32', java: '21' }
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -120,6 +120,8 @@ jobs:
           -Ploader_version_range='${{ matrix.lrange }}'
           -Pmapping_version='${{ matrix.mc }}'
           -Ppack_format='${{ matrix.pack }}'
+          -Pcmdperm='${{ matrix.cmdperm }}'
+          -Pjava_version='${{ matrix.java }}'
         working-directory: forge
 
       - name: Rename jar

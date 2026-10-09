@@ -2,10 +2,11 @@ package com.hushayo.offlinelan;
 
 import java.util.function.Predicate;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.network.chat.Component;
 import net.minecraft.commands.Commands;
 
 /**
- * OP check for /online-mode, modern variant (Minecraft 1.21.11+).
+ * OP check + message helper for /online-mode, modern variant (Minecraft 1.21.11+).
  *
  * <p>The 1.21.11 permission overhaul removed
  * {@code CommandSourceStack.hasPermission(int)} and turned
@@ -19,5 +20,9 @@ public final class CmdPerm {
 
     public static Predicate<CommandSourceStack> op() {
         return Commands.hasPermission(Commands.LEVEL_ADMINS);
+    }
+
+    public static void say(CommandSourceStack src, String text) {
+        src.sendSuccess(() -> Component.literal(text), false);
     }
 }
