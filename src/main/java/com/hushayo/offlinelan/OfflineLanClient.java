@@ -11,6 +11,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.ScreenEvent;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
 @Mod(value = OfflineLan.MOD_ID, dist = Dist.CLIENT)
@@ -22,6 +23,11 @@ public class OfflineLanClient {
     }
 
     static void clearButton() {
+        toggleButton = null;
+    }
+
+    @SubscribeEvent
+    public static void onServerStopped(ServerStoppedEvent event) {
         toggleButton = null;
     }
 

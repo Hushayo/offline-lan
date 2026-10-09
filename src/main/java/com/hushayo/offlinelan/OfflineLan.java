@@ -45,7 +45,6 @@ public class OfflineLan {
 
     private static void onServerStopped(ServerStoppedEvent event) {
         onlineMode = true;
-        OfflineLanClient.clearButton();
     }
 
     public static boolean isOnlineMode() {
@@ -74,7 +73,7 @@ public class OfflineLan {
 
     private static void onRegisterCommands(RegisterCommandsEvent event) {
         LiteralArgumentBuilder<CommandSourceStack> cmd = Commands.literal("online-mode")
-                .requires(src -> src.hasPermission(Commands.LEVEL_ADMINS))
+                .requires(src -> src.hasPermission(3)) // LEVEL_ADMINS: host / OPs only
                 .then(Commands.literal("on").executes(ctx -> {
                     setOnlineMode(ctx.getSource().getServer(), true);
                     ctx.getSource().sendSuccess(() -> Component.literal("Online Mode is now ON. Only premium accounts can join LAN."), false);
