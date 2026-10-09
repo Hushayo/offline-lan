@@ -12,6 +12,8 @@ import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.api.distmarker.Dist;
 import org.slf4j.Logger;
 
 /**
@@ -34,6 +36,11 @@ public class OfflineLanForge {
         MinecraftForge.EVENT_BUS.addListener(OfflineLanForge::onServerStarted);
         MinecraftForge.EVENT_BUS.addListener(OfflineLanForge::onServerStopped);
         MinecraftForge.EVENT_BUS.addListener(OfflineLanForge::onRegisterCommands);
+        // Client-only screen hook. Guarded (not annotated) so the common code
+        // stays compatible with every Forge version.
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            OfflineLanForgeClient.init();
+        }
     }
 
     private static void onServerStarted(ServerStartedEvent event) {
@@ -73,7 +80,7 @@ public class OfflineLanForge {
 
     private static void onRegisterCommands(RegisterCommandsEvent event) {
         LiteralArgumentBuilder<CommandSourceStack> cmd = Commands.literal("online-mode")
-                .requires(src -> src.hasPermission(3)) // admins: host / OPs only
+                .requires(CmdPerm.op())
                 .then(Commands.literal("on").executes(ctx -> {
                     setOnlineMode(ctx.getSource().getServer(), true);
                     ctx.getSource().sendSuccess(() -> Component.literal("Online Mode is now ON. Only premium accounts can join LAN."), false);

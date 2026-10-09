@@ -28,12 +28,12 @@ jobs:
           - { mc: '1.21.8', neo: '21.8.54', pmc: '1.21.8', pmap: '2025.09.14', toml: 'modern', java: '21' }
           - { mc: '1.21.9', neo: '21.9.16-beta', pmc: '1.21.9', pmap: '2025.10.05', toml: 'modern', java: '21' }
           - { mc: '1.21.10', neo: '21.10.64', pmc: '1.21.10', pmap: '2025.10.12', toml: 'modern', java: '21' }
-          - { mc: '1.21.11', neo: '21.11.45', pmc: '1.21.11', pmap: '2025.12.20', toml: 'modern', java: '21' }
-          - { mc: '26.1', neo: '26.1.0.19-beta', pmc: '', pmap: '', toml: 'modern', java: '25' }
-          - { mc: '26.1.1', neo: '26.1.1.15-beta', pmc: '', pmap: '', toml: 'modern', java: '25' }
-          - { mc: '26.1.2', neo: '26.1.2.114', pmc: '', pmap: '', toml: 'modern', java: '25' }
-          - { mc: '26.2', neo: '26.2.0.88', pmc: '', pmap: '', toml: 'modern', java: '25' }
-          - { mc: '26.3', neo: '26.3.0.52-beta', pmc: '', pmap: '', toml: 'modern', java: '25' }
+          - { mc: '1.21.11', neo: '21.11.45', pmc: '1.21.11', pmap: '2025.12.20', toml: 'modern', java: '21', cmdperm: 'modern' }
+          - { mc: '26.1', neo: '26.1.0.19-beta', pmc: '', pmap: '', toml: 'modern', java: '25', cmdperm: 'modern' }
+          - { mc: '26.1.1', neo: '26.1.1.15-beta', pmc: '', pmap: '', toml: 'modern', java: '25', cmdperm: 'modern' }
+          - { mc: '26.1.2', neo: '26.1.2.114', pmc: '', pmap: '', toml: 'modern', java: '25', cmdperm: 'modern' }
+          - { mc: '26.2', neo: '26.2.0.88', pmc: '', pmap: '', toml: 'modern', java: '25', cmdperm: 'modern' }
+          - { mc: '26.3', neo: '26.3.0.52-beta', pmc: '', pmap: '', toml: 'modern', java: '25', cmdperm: 'modern' }
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -61,6 +61,7 @@ jobs:
           -Pparchment_mappings_version='${{ matrix.pmap }}'
           -Ptoml_variant='${{ matrix.toml }}'
           -Pjava_version='${{ matrix.java }}'
+          -Pcmdperm='${{ matrix.cmdperm }}'
         working-directory: neoforge
 
       - name: Rename jar
@@ -160,7 +161,7 @@ jobs:
           - { mc: '1.21.8', api: '0.136.1+1.21.8' }
           - { mc: '1.21.9', api: '0.134.1+1.21.9' }
           - { mc: '1.21.10', api: '0.138.4+1.21.10' }
-          - { mc: '1.21.11', api: '0.141.6+1.21.11' }
+          - { mc: '1.21.11', api: '0.141.6+1.21.11', cmdperm: 'modern' }
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -168,7 +169,7 @@ jobs:
       - name: Setup JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: '25'
           distribution: 'temurin'
 
       - name: Setup Gradle
@@ -196,6 +197,7 @@ jobs:
           -Pjava_release='${{ steps.props.outputs.java_release }}'
           -Pminecraft_dep='~${{ matrix.mc }}'
           -Pjava_dep='${{ steps.props.outputs.java_dep }}'
+          -Pcmdperm='${{ matrix.cmdperm }}'
         working-directory: fabric
 
       - name: Rename jar

@@ -38,6 +38,18 @@ base {
 // Overridden per Minecraft version by the CI matrix via -Pjava_version.
 java.toolchain.languageVersion = JavaLanguageVersion.of((project.findProperty('java_version') ?: '21') as int)
 
+sourceSets {
+    main {
+        java {
+            // OP-gating API changed in 1.21.11 (permission overhaul):
+            // CommandSourceStack.hasPermission(int) was removed in favour of
+            // Commands.hasPermission(PermissionCheck). The matching CmdPerm
+            // variant is selected via -Pcmdperm=modern (default: legacy).
+            srcDir "src/cmdperm-${project.findProperty('cmdperm') ?: 'legacy'}/java"
+        }
+    }
+}
+
 neoForge {
     // Specify the version of NeoForge to use.
     version = project.neo_version
