@@ -1,0 +1,36 @@
+{
+	"schemaVersion": 1,
+	"id": "offlinelan",
+	"version": "${version}",
+	"name": "OfflineLAN",
+	"description": "Allows non-premium (offline / cracked) accounts to join your LAN world. Only the host needs this mod: open to LAN, set Online Mode OFF. Use /online-mode on|off|status to change it while running.",
+	"authors": [
+		"Hushayo"
+	],
+	"contact": {
+		"homepage": "https://github.com/Hushayo/offline-lan",
+		"sources": "https://github.com/Hushayo/offline-lan"
+	},
+	"license": "MIT",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.hushayo.offlinelan.OfflineLanFabric"
+		],
+		"client": [
+			"com.hushayo.offlinelan.client.OfflineLanFabricClient"
+		]
+	},
+	"mixins": [
+		{
+			"config": "offlinelan.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": "${loader_dep}",
+		"minecraft": "${minecraft_dep}",
+		"java": "${java_dep}",
+		"fabric-api": "*"
+	}
+}
